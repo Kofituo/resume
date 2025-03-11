@@ -44,6 +44,6 @@ Experience my resume live:
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/kofituo/resume.git
-cd your-repo
+git clone https://github.com/Kofituo/resume.git
+cd resume
 trunk serve
