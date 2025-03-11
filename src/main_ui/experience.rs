@@ -1,3 +1,4 @@
+use crate::main_ui::Header;
 use ToString;
 use derive_more::Display;
 use web_sys::js_sys::Date;
@@ -8,7 +9,7 @@ use yew_autoprops::autoprops;
 pub fn Experience() -> Html {
     html! {
         <div class= "">
-            <h2 class="text-2xl mb-6"> {"Experience"} </h2>
+            <Header text = {"Experience"}/>
             <ul class="list-none space-y-5">
                 {for [ExperienceDetails::Upwork,ExperienceDetails::Medium,ExperienceDetails::Voiceban,ExperienceDetails::Assistant]
                     .map(|details| html!{
@@ -34,7 +35,7 @@ fn ExperienceItem(
 ) -> Html {
     html! {
         <div class ="flex flex-row space-x-1">
-            <div class ="flex flex-col w-3/8">
+            <div class ="flex flex-col flex-none w-64">
                 <p class="text-slate-400 text-sm">
                     <time datetime={timeline.start_datetime.clone()}>{&timeline.start}</time>
                     {" - "}
@@ -101,10 +102,10 @@ impl ExperienceDetails {
 
     fn img_src(self) -> &'static str {
         match self {
-            ExperienceDetails::Voiceban => "assets/test.png",
-            ExperienceDetails::Medium => "assets/test.png",
-            ExperienceDetails::Upwork => "assets/test.png",
-            ExperienceDetails::Assistant => "assets/test.png",
+            ExperienceDetails::Voiceban => "assets/letter-v.png",
+            ExperienceDetails::Medium => "https://cdn-icons-png.flaticon.com/512/5968/5968906.png",
+            ExperienceDetails::Upwork => "assets/upwork.svg",
+            ExperienceDetails::Assistant => "assets/wonders_co.jpeg",
         }
     }
 
@@ -126,8 +127,32 @@ impl ExperienceDetails {
         }
     }
 
-    fn text(self) -> String {
-        "todo ".repeat(50)
+    fn text(self) -> &'static str {
+        match self {
+            ExperienceDetails::Voiceban => {
+                "At Voiceban, a blockchain startup, I led the development team in designing \
+                and implementing decentralized solutions. I oversaw project \
+                architecture, coordinate cross-functional collaboration, and ensure \
+                secure code delivery, fostering a culture of continuous improvement and \
+                rapid innovation in a dynamic startup environment."
+            }
+            ExperienceDetails::Medium => {
+                "I write tutorials on Rust and Android development. My articles simplify \
+                complex programming concepts into accessible, step-by-step guides that \
+                engage a broad audience. This experience has refined my technical writing skills \
+                and deepened my understanding of modern software practices."
+            }
+            ExperienceDetails::Upwork => {
+                "I've collaborated with diverse clients to deploy scalable systems using Rust, Android and Python. \
+                 I maintained 𝟭𝟬𝟬%client satisfaction through performance-driven development and \
+                 effective communication."
+            }
+            ExperienceDetails::Assistant => {
+                "I assisted a developer at WondersCo on Android and Rust \
+            projects. I contributed to coding, debugging, and documentation efforts, streamlining \
+            project workflows and ensuring high-quality software delivery."
+            }
+        }
     }
 
     fn experience_item(self) -> Html {

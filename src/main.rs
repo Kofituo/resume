@@ -1,16 +1,15 @@
 mod aside;
 mod main_ui;
 
-use yew::prelude::*;
 use crate::aside::Aside;
 use crate::main_ui::MainUI;
+use yew::prelude::*;
 
 #[function_component]
 fn App() -> Html {
-
     html! {
         <div class="flex flex-row w-screen pt-4 px-6">
-            <div class="mr-15">
+            <div class="mr-15 min-w-54">
                 <Aside/>
             </div>
             <MainUI/>

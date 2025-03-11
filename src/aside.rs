@@ -7,7 +7,7 @@ pub fn Aside() -> Html {
     html! {
         <div class="flex flex-col">
             <div class="flex flex-col">
-                <img src="assets/kofi.jpg" alt="kofi's picture" class="rounded-full size-20 grayscale-50 shadow-lg perspective-distant mb-4"/>
+                <img src="assets/kofi.jpg" alt="kofi's picture" class="rounded-full size-28 grayscale-50 shadow-lg perspective-distant mb-4"/>
                 <h2 class="text-2xl">{"Kofi Otuo"}</h2>
                 <p class="text-xl text-transparent bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-700 bg-clip-text">{"Full-Stack Developer"}</p>
             </div>
@@ -31,6 +31,17 @@ pub fn Aside() -> Html {
                     })
                 }
             </div>
+            <HorizontalDivider/>
+                <div class="flex flex-col space-y-3">
+                    {for [
+                            Links::Languages(Languages::English),
+                            Links::Languages(Languages::Twi),
+                        ]
+                        .map(|link|html!{
+                            <LinksItem {link}/>
+                        })
+                    }
+            </div>
         </div>
     }
 }
@@ -45,17 +56,19 @@ fn HorizontalDivider() -> Html {
 #[function_component]
 fn LinksItem(link: &Links) -> Html {
     html! {
-        <div class="flex flex-row items-center space-x-4">
-            {if matches!(link, Links::Socials(_)) {
-                link.img()
-            } else {
-                html!(<AsideLinksImg link = {link.clone()} />)}
-            }
-            <div class="flex flex-col">
-                <p class="text-slate-500 text-sm">{link.to_string()}</p>
-                <p class="text-slate-700 text-sm">{link.text()}</p>
+        <a href={link.href()} target="_blank">
+            <div class="flex flex-row items-center space-x-4">
+                {if matches!(link, Links::Socials(_) | Links::Languages(_)) {
+                    link.img()
+                } else {
+                    html!(<AsideLinksImg link = {link.clone()} />)}
+                }
+                <div class="flex flex-col">
+                    <p class="text-slate-500 text-sm">{link.to_string()}</p>
+                    <p class="text-slate-700 text-sm">{link.text()}</p>
+                </div>
             </div>
-        </div>
+        </a>
     }
 }
 
@@ -66,6 +79,7 @@ pub enum Links {
     Phone,
     Address,
     Socials(Socials),
+    Languages(Languages),
 }
 
 #[derive(Clone, Copy, Debug, Display, PartialEq)]
@@ -76,6 +90,13 @@ pub enum Socials {
     Telegram,
     Github,
 }
+
+#[derive(Clone, Copy, Debug, Display, PartialEq)]
+pub enum Languages {
+    English,
+    Twi,
+}
+
 impl Links {
     fn text(self) -> &'static str {
         match self {
@@ -84,11 +105,15 @@ impl Links {
             Links::Phone => "(+233) 55 229 5952",
             Links::Address => "Spintex, Accra",
             Links::Socials(social) => match social {
-                Socials::LinkedIn => "Todo",
-                Socials::Instagram => "Todo",
-                Socials::X => "todo",
-                Socials::Telegram => "https://t.me/otuokofi",
-                Socials::Github => "https://github.com/Kofituo",
+                Socials::LinkedIn => "kofi-otuo-010993222",
+                Socials::Instagram => "@kofiotuo",
+                Socials::X => "@kofiotuo",
+                Socials::Telegram => "@otuokofi",
+                Socials::Github => "@Kofituo",
+            },
+            Links::Languages(language) => match language {
+                Languages::English => "Professional working",
+                Languages::Twi => "Native",
             },
         }
     }
@@ -144,9 +169,42 @@ impl Links {
                             html! {
                                 <i class="fa fa-brands fa-github text-3xl"/>
                             }
-                        }}
+                        }},
+                    Links::Languages(language) => match language {
+                        Languages::English => {
+                            html! {
+                                <div class="rounded-lg">
+                                    <p class="text-3xl">{"🇬🇧"}</p>
+                                </div>
+                            }
+                        },
+                        Languages::Twi => {
+                            html! {
+                                <div class="rounded-lg">
+                                    <p class="text-3xl">{"🇬🇭"}</p>
+                                </div>
+                            }
+                        }
+                    }
                 }}
             </div>
+        }
+    }
+
+    fn href(self) -> &'static str {
+        match self {
+            Links::Email => "mailto:otukof@gmail.com",
+            Links::Website => "https://kofituo.github.io/",
+            Links::Phone => "tel:+233552295952",
+            Links::Address => "https://maps.app.goo.gl/qFKSxdAVScV9cyCD9?g_st=atm",
+            Links::Socials(social) => match social {
+                Socials::LinkedIn => "https://www.linkedin.com/in/kofi-otuo-010993222/",
+                Socials::Instagram => "https://www.instagram.com/kofiotuo/",
+                Socials::X => "https://x.com",
+                Socials::Telegram => "https://t.me/otuokofi",
+                Socials::Github => "https://github.com/Kofituo",
+            },
+            Links::Languages(_language) => "",
         }
     }
 }
