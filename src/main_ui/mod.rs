@@ -1,6 +1,7 @@
 use crate::main_ui::education::Education;
 use crate::main_ui::experience::Experience;
 use crate::main_ui::featured_articles::FeaturedArticles;
+use crate::main_ui::latest_projects::LatestProjects;
 use crate::main_ui::skills::Skills;
 use yew::{AttrValue, Html, function_component, html};
 use yew_autoprops::autoprops;
@@ -17,7 +18,7 @@ pub fn MainUI() -> Html {
     html! {
         <div class="p-0 relative before:absolute before:inset-0 before:h-full before:w-0.5 \
         before:bg-gradient-to-b before:from-slate-50 before:via-slate-200 before:to-transparent space-y-7">
-            <MainUIITem> <Education /> </MainUIITem>
+            <MainUIITem> <LatestProjects /> </MainUIITem>
             <MainUIITem> <Experience /> </MainUIITem>
             <MainUIITem> <Skills /> </MainUIITem>
             <MainUIITem> <FeaturedArticles /> </MainUIITem>
